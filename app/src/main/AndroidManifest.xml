@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Final_Project_RSS_Reader">
         <activity
+            android:name=".EditRssFeedActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ViewFeedActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddFeedActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
