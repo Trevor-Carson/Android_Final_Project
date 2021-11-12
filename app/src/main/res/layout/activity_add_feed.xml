@@ -7,11 +7,20 @@
     tools:context=".AddFeedActivity">
 
     <EditText
+        android:id="@+id/addFeedNameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:hint="Rss feed name" />
+
+    <EditText
         android:id="@+id/addFeedEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="90dp" />
+        android:layout_marginTop="90dp"
+        android:hint="Rss feed address" />
 
     <Button
         android:id="@+id/addFeedButton"
@@ -20,6 +29,16 @@
         android:layout_below="@id/addFeedEditText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="28dp"
-        android:text="Save Feed" />
+        android:text="Add Feed" />
+
+    <Button
+        android:id="@+id/viewFeedsButton"
+        android:layout_width="120dp"
+        android:layout_height="44dp"
+        android:layout_below="@id/addFeedButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp"
+        android:onClick="gotoViewFeeds"
+        android:text="View Feed" />
 
 </RelativeLayout>

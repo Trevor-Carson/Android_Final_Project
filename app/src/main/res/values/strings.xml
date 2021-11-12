@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Final_Project_RSS_Reader</string>
+    <string name="app_name">BBC RSS News Feed</string>
+    <string name="app_titleScreen">BBC News Reader</string>
 </resources>

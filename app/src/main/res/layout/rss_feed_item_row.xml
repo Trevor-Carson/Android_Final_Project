@@ -17,7 +17,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/rssFeedItemImageView"
+        android:paddingTop="10dp"
         android:text="Title Text View"
+        android:textSize="22dp"
         android:textStyle="bold" />
 
     <TextView
@@ -26,6 +28,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rssFeedItemTitleTextView"
         android:layout_toRightOf="@id/rssFeedItemImageView"
+        android:padding="5dp"
         android:text="...Article Text View...Article Text View..." />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:text="Tap to remove" />
 
 </RelativeLayout>
