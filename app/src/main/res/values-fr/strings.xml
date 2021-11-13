@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BBC RSS News Feed</string> <!-- TO TRANSLATE -->
+    <string name="app_titleScreen">BBC News Reader</string> <!-- TO TRANSLATE -->
+    <string name="rss_reader_text">RSS Reader</string> <!-- TO TRANSLATE -->
+    <string name="open_feed_text">Open Feed</string> <!-- TO TRANSLATE -->
+    <string name="feed_name_hint">RSS Feed Name</string> <!-- TO TRANSLATE -->
+    <string name="feed_address_hint">RSS Feed Address</string> <!-- TO TRANSLATE -->
+    <string name="add_feed_text">Add Feed</string> <!-- TO TRANSLATE -->
+    <string name="view_feed_text">View Feed</string> <!-- TO TRANSLATE -->
+    <string name="rss_title_text">Title RSS Feed</string> <!-- TO TRANSLATE -->
+    <string name="rss_url_text">www.rss.feed.com</string> <!-- TO TRANSLATE -->
+    <string name="row_title_text">Title Text View</string> <!-- TO TRANSLATE -->
+    <string name="row_article_text">...Article Text View...Article Text View...</string> <!-- TO TRANSLATE -->
+    <string name="row_remove_text">Tap to remove</string> <!-- TO TRANSLATE -->
+</resources>

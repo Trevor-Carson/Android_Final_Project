@@ -7,7 +7,7 @@
         android:id="@+id/rssEditFeedTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Title RSS Feed"
+        android:text="@string/rss_title_text"
         android:textStyle="bold" />
 
     <TextView
@@ -15,6 +15,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rssEditFeedTitleTextView"
-        android:text="www.rss.feed.Com" />
+        android:text="@string/rss_url_text" />
 
 </RelativeLayout>
