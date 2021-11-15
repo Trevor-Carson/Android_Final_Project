@@ -1,6 +1,7 @@
 package com.example.final_project_rss_reader;
 
 public class RssFeed {
+    // stores RSS feed information
 
     public int id;
     public String rssFeedTitle;

@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">BBC RSS News Feed</string>
     <string name="app_titleScreen">BBC News Reader</string>
+    <string name="rss_reader_text">RSS Reader</string>
+    <string name="open_feed_text">Open Feed</string>
+    <string name="feed_name_hint">RSS Feed Name</string>
+    <string name="feed_address_hint">RSS Feed Address</string>
+    <string name="add_feed_text">Add Feed</string>
+    <string name="view_feed_text">View Feed</string>
+    <string name="rss_title_text">Title RSS Feed</string>
+    <string name="rss_url_text">www.rss.feed.com</string>
+    <string name="row_title_text">Title Text View</string>
+    <string name="row_article_text">...Article Text View...Article Text View...</string>
+    <string name="row_remove_text">Tap to remove</string>
 </resources>

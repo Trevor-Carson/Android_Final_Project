@@ -8,7 +8,6 @@
         android:layout_width="80dp"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:src="@drawable/rss_no_image" />
 
@@ -16,9 +15,9 @@
         android:id="@+id/rssFeedItemTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/rssFeedItemImageView"
+        android:layout_toEndOf="@id/rssFeedItemImageView"
         android:paddingTop="10dp"
-        android:text="Title Text View"
+        android:text="@string/row_title_text"
         android:textSize="22dp"
         android:textStyle="bold" />
 
@@ -27,15 +26,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rssFeedItemTitleTextView"
-        android:layout_toRightOf="@id/rssFeedItemImageView"
+        android:layout_toEndOf="@id/rssFeedItemImageView"
         android:padding="5dp"
-        android:text="...Article Text View...Article Text View..." />
+        android:text="@string/row_article_text" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:text="Tap to remove" />
+        android:text="@string/row_remove_text" />
 
 </RelativeLayout>

@@ -15,29 +15,33 @@ public class AddFeedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_feed);
+        // sets layout for AddFeedActivity as activity_add_feed.xml
 
-        Button saveButton = findViewById(R.id.addFeedButton);
-        final EditText feedAddress = findViewById(R.id.addFeedEditText);
-        final EditText feedName = findViewById(R.id.addFeedNameEditText);
-
+        Button saveButton = findViewById(R.id.addFeedButton); // button to save a feed object
+        final EditText feedAddress = findViewById(R.id.addFeedEditText); // edittext to save feed address
+        final EditText feedName = findViewById(R.id.addFeedNameEditText); // edittext to save feed name
         saveButton.setOnClickListener(view -> {
             if (feedAddress.getText().length() < 6) {
-                Toast.makeText(getApplicationContext(), "Rss feed address is too short", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "RSS feed address is too short", Toast.LENGTH_LONG).show();
                 return;
+                // if feed address is less than 6 characters, display the toast message
             }
 
             Database db = new Database(AddFeedActivity.this);
             RssFeed rssFeed = new RssFeed(feedName.getText().toString(), feedAddress.getText().toString());
 
             db.addRssFeed(rssFeed);
-            Toast.makeText(getApplicationContext(), "Rss feed added!", Toast.LENGTH_LONG).show();
+            // adds selected RSS feed to the local database
+            Toast.makeText(getApplicationContext(), "RSS feed added!", Toast.LENGTH_LONG).show();
             feedName.setText("");
             feedAddress.setText("");
+            // empties EditText fields after an RSS feed object is added to the list
         });
     }
 
     public void gotoViewFeeds(View view) {
         Intent viewFeedsIntent = new Intent(this, EditRssFeedActivity.class);
         this.startActivity(viewFeedsIntent);
+        // intent to launch EditRssFeedActivity
     }
 }
