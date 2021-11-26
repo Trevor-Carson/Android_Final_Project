@@ -12,29 +12,21 @@
         android:src="@drawable/rss_no_image" />
 
     <TextView
-        android:id="@+id/rssFeedItemTitleTextView"
+        android:id="@+id/rssTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/rssFeedItemImageView"
-        android:paddingTop="10dp"
         android:text="@string/row_title_text"
-        android:textSize="22dp"
+        android:textSize="15sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/rssFeedItemArticleTextView"
+        android:id="@+id/rssArticleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rssFeedItemTitleTextView"
+        android:layout_below="@+id/rssTitleTextView"
         android:layout_toEndOf="@id/rssFeedItemImageView"
-        android:padding="5dp"
+        android:paddingBottom="10dp"
         android:text="@string/row_article_text" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:text="@string/row_remove_text" />
 
 </RelativeLayout>

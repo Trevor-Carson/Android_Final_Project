@@ -10,6 +10,7 @@
     <string name="rss_title_text">Title RSS Feed</string>
     <string name="rss_url_text">www.rss.feed.com</string>
     <string name="row_title_text">Title Text View</string>
-    <string name="row_article_text">...Article Text View...Article Text View...</string>
+    <string name="row_article_text">--Article Description--</string>
     <string name="row_remove_text">Tap to remove</string>
+    <string name="view_saved_text">View Saved Items</string>
 </resources>

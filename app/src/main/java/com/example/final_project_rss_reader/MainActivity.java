@@ -8,7 +8,6 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
         // launch activity
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,9 +15,14 @@ public class MainActivity extends AppCompatActivity {
         // sets the layout for MainActivity as activity_main.xml
     }
 
-    public void gotoAddFeed(View view) {
-        Intent addFeedIntent = new Intent(this, AddFeedActivity.class);
-        this.startActivity(addFeedIntent);
-        // intent to go to AddFeedActivity activity
+    public void launchRSSFeed(View view) {
+        Intent toFeedIntent = new Intent(this, ViewFeedActivity.class);
+        this.startActivity(toFeedIntent);
+        // intent to go to ViewFeedActivity activity
+    }
+    public void launchSavedItems(View view) {
+       Intent toSavedIntent = new Intent(this, ViewSavedActivity.class);
+        this.startActivity(toSavedIntent);
+        // intent to go to ViewSavedActivity activity
     }
 }

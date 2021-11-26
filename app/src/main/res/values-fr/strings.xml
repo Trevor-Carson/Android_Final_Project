@@ -11,6 +11,7 @@
     <string name="rss_title_text">Title RSS Feed</string> <!-- TO TRANSLATE -->
     <string name="rss_url_text">www.rss.feed.com</string> <!-- TO TRANSLATE -->
     <string name="row_title_text">Title Text View</string> <!-- TO TRANSLATE -->
-    <string name="row_article_text">...Article Text View...Article Text View...</string> <!-- TO TRANSLATE -->
+    <string name="row_article_text">--Article Description--</string> <!-- TO TRANSLATE -->
     <string name="row_remove_text">Tap to remove</string> <!-- TO TRANSLATE -->
+    <string name="view_saved_text">View Saved Items</string> <!-- TO TRANSLATE -->
 </resources>
