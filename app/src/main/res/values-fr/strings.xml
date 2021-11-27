@@ -14,4 +14,7 @@
     <string name="row_article_text">--Article Description--</string> <!-- TO TRANSLATE -->
     <string name="row_remove_text">Tap to remove</string> <!-- TO TRANSLATE -->
     <string name="view_saved_text">View Saved Items</string> <!-- TO TRANSLATE -->
+    <string name='fragment_title'>Title</string> <!-- TO TRANSLATE -->
+    <string name='fragment_description'>Description</string> <!-- TO TRANSLATE -->
+    <string name='fragment_link'>Link</string> <!-- TO TRANSLATE -->
 </resources>

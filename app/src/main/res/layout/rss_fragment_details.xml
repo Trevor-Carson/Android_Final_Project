@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RSSFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/rssTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_title"
+            android:textSize="25sp"
+            android:paddingBottom="10dp"/>
+
+        <TextView
+            android:id="@+id/rssDescTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rssTitleTextView"
+            android:text="@string/fragment_description"
+            android:textSize="15sp"
+            android:paddingBottom="30dp"/>
+
+        <TextView
+            android:id="@+id/RssLinkTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rssDescTextView"
+            android:text="@string/fragment_link"
+            android:autoLink="web"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/rssHideButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Hide" />
+
+
+
+    </RelativeLayout>
+
+
+</FrameLayout>

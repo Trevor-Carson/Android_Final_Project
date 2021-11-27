@@ -4,12 +4,18 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -18,13 +24,23 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class ViewFeedActivity extends AppCompatActivity {
     ArrayList<RssItem> rssItemList = new ArrayList<>();
+    ProgressBar loadProgressBar;
     ListView listView;
     RssItem item;
     SQLiteDatabase sqldb;
-    Cursor c;
+    EditText searchBar;
+
+    public static final String ITEM_TITLE = "TITLE";
+    public static final String ITEM_DESCRIPTION = "DESCRIPTION";
+    public static final String ITEM_LINK = "LINK";
+    public static final String ITEM_POSITION = "POSITION";
+    public static final String ITEM_ID = "ID";
 
 
     @Override
@@ -32,12 +48,44 @@ public class ViewFeedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_feed);
         RssLoad loadRss = new RssLoad();
+
+        loadProgressBar = findViewById(R.id.progressBar);
+        loadProgressBar.setVisibility(View.VISIBLE);
+
         loadRss.execute("http://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml");
         listView = (ListView) findViewById(R.id.rssFeedItemListView);
+        searchBar = (EditText) findViewById(R.id.editTextSearch);
+        listView.setTextFilterEnabled(true);
         RSSAdapter adapter = new RSSAdapter();
+        searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+                        public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+                        listView.invalidate();
+                        adapter.notifyDataSetChanged();
+            }
+            @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        adapter.getFilter().filter(s.toString());
+                        int textLength = s.length();
+                        ArrayList<RssItem> labItemss = new ArrayList<RssItem>();
+                        for (RssItem ll : rssItemList){
+                            if(textLength <= ll.getTitle().length()){
+                                if (ll.getTitle().toLowerCase().contains(s.toString().toLowerCase())){
+                                    labItemss.add(ll);
+                                }
+                            }
+                        }
+                        RSSAdapter adapter = new RSSAdapter(ViewFeedActivity.this, labItemss);
+                        listView.setAdapter(adapter);
+            }
 
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
         Database db = new Database(this);
         sqldb = db.getWritableDatabase();
+        boolean isTablet = findViewById(R.id.frameLayout) != null;
 
         listView.setOnItemLongClickListener((p, b, pos, id) -> {
             item = rssItemList.get(pos);
@@ -52,6 +100,30 @@ public class ViewFeedActivity extends AppCompatActivity {
             alertDelete.show();
             return true;
         });
+
+        listView.setOnItemClickListener(((parent, view, position, id) -> {
+
+            Bundle dataToPass = new Bundle();
+            dataToPass.putString(ITEM_TITLE, rssItemList.get(position).getTitle());
+            dataToPass.putString(ITEM_DESCRIPTION, rssItemList.get(position).getDescription());
+            dataToPass.putString(ITEM_LINK, rssItemList.get(position).getLink());
+            dataToPass.putInt(ITEM_POSITION, position);
+            dataToPass.putLong(ITEM_ID, id);
+            RSSFragment fragment = new RSSFragment();
+
+            if (isTablet) {
+                fragment.setArguments(dataToPass);
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frameLayout, fragment)
+                        .commit();
+            } else {
+                Intent nextActivity = new Intent(ViewFeedActivity.this, EmptyActivity.class);
+                nextActivity.putExtras(dataToPass);
+                startActivity(nextActivity);
+
+            }
+        }));
     }
 
     protected void addToDatabase(RssItem item) {
@@ -74,26 +146,32 @@ public class ViewFeedActivity extends AppCompatActivity {
             try {
                 URL rssURL = new URL(args[0]);
                 HttpURLConnection urlConnection = (HttpURLConnection) rssURL.openConnection();
-
                 InputStream response = urlConnection.getInputStream();
                 XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+                XmlPullParserFactory factory1 = XmlPullParserFactory.newInstance();
                 factory.setNamespaceAware(false);
+                factory1.setNamespaceAware(false);
                 XmlPullParser xpp = factory.newPullParser();
+                XmlPullParser xpp1 = factory1.newPullParser();
                 xpp.setInput(response, "UTF-8");
 
 
                 boolean done = false;
                 int eventType = xpp.getEventType();
+                int i = 1;
+                float count = 56; // number of items in BBC RSS feed
 
                 RssItem currentRSSItem = new RssItem();
+
                 while (eventType != XmlPullParser.END_DOCUMENT && !done) {
                     String name = null;
                     switch (eventType) {
                         case XmlPullParser.START_TAG:
                             name = xpp.getName();
+
                             if (name.equalsIgnoreCase("item")) {
                                 currentRSSItem = new RssItem();
-                            } else if (currentRSSItem != null) {
+                            } else {
                                 if (name.equalsIgnoreCase("link")) {
                                     currentRSSItem.setLink(xpp.nextText());
                                 } else if (name.equalsIgnoreCase("description")) {
@@ -103,23 +181,41 @@ public class ViewFeedActivity extends AppCompatActivity {
                                 } else if (name.equalsIgnoreCase("title")) {
                                     currentRSSItem.setTitle(xpp.nextText());
                                 }
+
                             }
                             break;
                         case XmlPullParser.END_TAG:
+
                             name = xpp.getName();
-                            if (name.equalsIgnoreCase("item") && currentRSSItem != null) {
+                            if (name.equalsIgnoreCase("item")) {
                                 rssItemList.add(currentRSSItem);
+
+
+                                   float progress = (i / count) * 100;
+                                   publishProgress((int)progress);
+                                    i++;
+
                             } else if (name.equalsIgnoreCase("channel")) {
+
+
                                 done = true;
                             }
                             break;
                     }
-                    eventType = xpp.next();
+                        eventType = xpp.next();
                 }
+
             } catch (Exception e) {
                 Log.e("Error", e.getMessage());
             }
+
             return "done";
+        }
+        protected void onProgressUpdate(Integer ...value){
+            loadProgressBar.setVisibility(View.VISIBLE);
+            loadProgressBar.setProgress(value[0]);
+
+
         }
 
         @Override
@@ -129,6 +225,7 @@ public class ViewFeedActivity extends AppCompatActivity {
             RSSAdapter adapter = new RSSAdapter(ViewFeedActivity.this, rssItemList);
             listView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
+            loadProgressBar.setVisibility(View.INVISIBLE);
         }
     }
 }

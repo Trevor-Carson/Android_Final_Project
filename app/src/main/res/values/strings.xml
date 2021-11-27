@@ -13,4 +13,7 @@
     <string name="row_article_text">--Article Description--</string>
     <string name="row_remove_text">Tap to remove</string>
     <string name="view_saved_text">View Saved Items</string>
+    <string name='fragment_title'>Title</string>
+    <string name='fragment_description'>Description</string>
+    <string name='fragment_link'>Link</string>
 </resources>
