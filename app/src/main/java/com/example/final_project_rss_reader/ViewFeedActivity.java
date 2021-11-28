@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,6 +15,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -24,12 +26,11 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 public class ViewFeedActivity extends AppCompatActivity {
     ArrayList<RssItem> rssItemList = new ArrayList<>();
+    ArrayList<RssItem> rssItemsFiltered;
+    int textLength;
     ProgressBar loadProgressBar;
     ListView listView;
     RssItem item;
@@ -66,16 +67,16 @@ public class ViewFeedActivity extends AppCompatActivity {
             @Override
                         public void onTextChanged(CharSequence s, int start, int before, int count) {
                         adapter.getFilter().filter(s.toString());
-                        int textLength = s.length();
-                        ArrayList<RssItem> labItemss = new ArrayList<RssItem>();
+                        textLength = s.length();
+                        rssItemsFiltered = new ArrayList<RssItem>();
                         for (RssItem ll : rssItemList){
                             if(textLength <= ll.getTitle().length()){
                                 if (ll.getTitle().toLowerCase().contains(s.toString().toLowerCase())){
-                                    labItemss.add(ll);
+                                    rssItemsFiltered.add(ll);
                                 }
                             }
                         }
-                        RSSAdapter adapter = new RSSAdapter(ViewFeedActivity.this, labItemss);
+                        RSSAdapter adapter = new RSSAdapter(ViewFeedActivity.this, rssItemsFiltered);
                         listView.setAdapter(adapter);
             }
 
@@ -88,12 +89,22 @@ public class ViewFeedActivity extends AppCompatActivity {
         boolean isTablet = findViewById(R.id.frameLayout) != null;
 
         listView.setOnItemLongClickListener((p, b, pos, id) -> {
-            item = rssItemList.get(pos);
+            if (textLength == 0) {
+                item = rssItemList.get(pos);
+            } else {
+                item = rssItemsFiltered.get(pos);
+            }
             AlertDialog alertDelete = new AlertDialog.Builder(this)
                     .setTitle("Save this article?")
                     .setPositiveButton("Yes", (dialog, which) -> {
                         addToDatabase(item);
                         adapter.notifyDataSetChanged();
+                        Snackbar snackbar = Snackbar.make(listView,
+                                "Item added to saved items.",Snackbar.LENGTH_SHORT);
+                        snackbar.setAction("UNDO", view -> undoAdd(item));
+
+
+                        snackbar.show();
                     })
                     .setNegativeButton("No", null)
                     .create();
@@ -102,13 +113,22 @@ public class ViewFeedActivity extends AppCompatActivity {
         });
 
         listView.setOnItemClickListener(((parent, view, position, id) -> {
-
             Bundle dataToPass = new Bundle();
-            dataToPass.putString(ITEM_TITLE, rssItemList.get(position).getTitle());
-            dataToPass.putString(ITEM_DESCRIPTION, rssItemList.get(position).getDescription());
-            dataToPass.putString(ITEM_LINK, rssItemList.get(position).getLink());
-            dataToPass.putInt(ITEM_POSITION, position);
-            dataToPass.putLong(ITEM_ID, id);
+            if (textLength == 0) {
+                dataToPass.putString(ITEM_TITLE, rssItemList.get(position).getTitle());
+                dataToPass.putString(ITEM_DESCRIPTION, rssItemList.get(position).getDescription());
+                dataToPass.putString(ITEM_LINK, rssItemList.get(position).getLink());
+                dataToPass.putInt(ITEM_POSITION, position);
+                dataToPass.putLong(ITEM_ID, id);
+
+            } else {
+
+                dataToPass.putString(ITEM_TITLE, rssItemsFiltered.get(position).getTitle());
+                dataToPass.putString(ITEM_DESCRIPTION, rssItemsFiltered.get(position).getDescription());
+                dataToPass.putString(ITEM_LINK, rssItemsFiltered.get(position).getLink());
+                dataToPass.putInt(ITEM_POSITION, position);
+                dataToPass.putLong(ITEM_ID, id);
+            }
             RSSFragment fragment = new RSSFragment();
 
             if (isTablet) {
@@ -136,6 +156,17 @@ public class ViewFeedActivity extends AppCompatActivity {
         // Log.i("DB values", String.valueOf(newRowValues));
 
         sqldb.insert(Database.TABLE_NAME, null, newRowValues);
+    }
+    protected void undoAdd(RssItem item) {
+        Log.i("Undo", "loaded");
+        Toast toast = Toast.makeText(getApplicationContext(),
+                "Item removed.",
+                Toast.LENGTH_SHORT);
+        String title = item.getTitle();
+        String description = item.getDescription();
+
+        sqldb.delete(Database.TABLE_NAME, Database.COL_TITLE + "= ?", new String[]{title});
+        toast.show();
     }
 
     public class RssLoad extends AsyncTask<String, Integer, String> {
