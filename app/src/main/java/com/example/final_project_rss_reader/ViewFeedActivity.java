@@ -38,6 +38,7 @@ public class ViewFeedActivity extends AppCompatActivity {
     EditText searchBar;
 
     public static final String ITEM_TITLE = "TITLE";
+    public static final String ITEM_DATE= "DATE";
     public static final String ITEM_DESCRIPTION = "DESCRIPTION";
     public static final String ITEM_LINK = "LINK";
     public static final String ITEM_POSITION = "POSITION";
@@ -116,19 +117,19 @@ public class ViewFeedActivity extends AppCompatActivity {
             Bundle dataToPass = new Bundle();
             if (textLength == 0) {
                 dataToPass.putString(ITEM_TITLE, rssItemList.get(position).getTitle());
+                dataToPass.putString(ITEM_DATE, rssItemList.get(position).getPubDate());
                 dataToPass.putString(ITEM_DESCRIPTION, rssItemList.get(position).getDescription());
                 dataToPass.putString(ITEM_LINK, rssItemList.get(position).getLink());
-                dataToPass.putInt(ITEM_POSITION, position);
-                dataToPass.putLong(ITEM_ID, id);
 
             } else {
 
                 dataToPass.putString(ITEM_TITLE, rssItemsFiltered.get(position).getTitle());
+                dataToPass.putString(ITEM_DATE, rssItemsFiltered.get(position).getPubDate());
                 dataToPass.putString(ITEM_DESCRIPTION, rssItemsFiltered.get(position).getDescription());
                 dataToPass.putString(ITEM_LINK, rssItemsFiltered.get(position).getLink());
-                dataToPass.putInt(ITEM_POSITION, position);
-                dataToPass.putLong(ITEM_ID, id);
             }
+            dataToPass.putInt(ITEM_POSITION, position);
+            dataToPass.putLong(ITEM_ID, id);
             RSSFragment fragment = new RSSFragment();
 
             if (isTablet) {

@@ -16,4 +16,5 @@
     <string name='fragment_title'>Title</string>
     <string name='fragment_description'>Description</string>
     <string name='fragment_link'>Link</string>
+    <string name='fragment_date'>Pub Date</string>
 </resources>

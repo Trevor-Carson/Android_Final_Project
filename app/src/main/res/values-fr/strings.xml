@@ -17,4 +17,5 @@
     <string name='fragment_title'>Title</string> <!-- TO TRANSLATE -->
     <string name='fragment_description'>Description</string> <!-- TO TRANSLATE -->
     <string name='fragment_link'>Link</string> <!-- TO TRANSLATE -->
+    <string name='fragment_date'>Pub Date</string> <!-- TO TRANSLATE -->
 </resources>

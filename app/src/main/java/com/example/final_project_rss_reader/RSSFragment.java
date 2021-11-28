@@ -26,8 +26,11 @@ public class RSSFragment extends Fragment {
         TextView descTextView = result.findViewById(R.id.rssDescTextView);
         descTextView.setText(dataFromActivity.getString(ViewFeedActivity.ITEM_DESCRIPTION));
 
-        TextView linkTextView = result.findViewById(R.id.RssLinkTextView);
+        TextView linkTextView = result.findViewById(R.id.rssLinkTextView);
         linkTextView.setText((dataFromActivity.getString(ViewFeedActivity.ITEM_LINK)));
+
+        TextView dateTextView = result.findViewById(R.id.rssDateTextView);
+        dateTextView.setText((dataFromActivity.getString(ViewFeedActivity.ITEM_DATE)));
 
         Button button_L07 = result.findViewById((R.id.rssHideButton));
         button_L07.setOnClickListener(v -> {
