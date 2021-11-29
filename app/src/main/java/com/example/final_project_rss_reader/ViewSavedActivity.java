@@ -12,15 +12,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
+/**
+ * Class to view store saved/favorite RSS feeds from a database
+ */
 public class ViewSavedActivity extends AppCompatActivity {
 
-    SQLiteDatabase db;
-    public int id;
-    Cursor results;
-    ArrayList<RssItem> savedItems = new ArrayList();
-    ListView listView;
+    SQLiteDatabase db;                                  // Opensource SQL database that stores data to a text file on a device
+    public int id;                                      // Integer to store the value of the RSS feed in the database
+    Cursor results;                                     // Contain the result set of a query made against a database
+    ArrayList<RssItem> savedItems = new ArrayList();    // Array list to hold the values of RSS feeds in the database
+    ListView listView;                                  // A list view is an adapter view that does not know the details, such as type and contents, of the views it contains
 
+    // Method to show saved RSS feeds from a database when the activity is called/opened
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_feed);
@@ -52,6 +55,8 @@ public class ViewSavedActivity extends AppCompatActivity {
 
             });
     }
+
+    // Method to load the RSS feed information from a database
     private void loadDatabaseData() {
         // Log.i("DB: ", String.valueOf(savedItems));
         Database dbOpener = new Database(this);
@@ -62,19 +67,21 @@ public class ViewSavedActivity extends AppCompatActivity {
         results = db.query(false, Database.TABLE_NAME, column, null, null,
                 null, null, null, null);
 
-        int idColIndex = results.getColumnIndex(Database.COL_ID);
-        int titleColIndex = results.getColumnIndex(Database.COL_TITLE);
-        int descColIndex = results.getColumnIndex(Database.COL_DESCRIPTION);
+        int idColIndex = results.getColumnIndex(Database.COL_ID);               // integer to hold the database column number for the RSS ID
+        int titleColIndex = results.getColumnIndex(Database.COL_TITLE);         // integer to hold the database column number for the RSS title
+        int descColIndex = results.getColumnIndex(Database.COL_DESCRIPTION);    // integer to hold the database column number for the RSS description
 
 
         while (results.moveToNext()) {
-            String title = results.getString(titleColIndex);
-            String description = results.getString(descColIndex);
-            long id = results.getLong(idColIndex);
+            String title = results.getString(titleColIndex);        // String to hold the value of the RSS title from the database
+            String description = results.getString(descColIndex);   // String to hold the value of the RSS description from the database
+            long id = results.getLong(idColIndex);                  // Long to hold the value of the RSS id from the database
             savedItems.add(new RssItem(id, title, description));
         }
         printCursor(results, db.getVersion());
     }
+
+    // Method to return an RSS feed based on its position in the database
     protected void printCursor(Cursor c, int version) {
         // for debugging purposes
         if (c.moveToFirst()) {
@@ -85,6 +92,8 @@ public class ViewSavedActivity extends AppCompatActivity {
             Log.i("cursor row results", DatabaseUtils.dumpCursorToString(c));
         }
     }
+
+    // Method to delete a saved item in the database
     protected void deleteSavedItem(RssItem item){
         db.delete(Database.TABLE_NAME, Database.COL_ID + "= ?", new String[]{Long.toString(item.getId())});
     }

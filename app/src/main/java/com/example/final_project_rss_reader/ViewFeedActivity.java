@@ -27,24 +27,28 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+/**
+ * Class to generate a RSS feed list based on items passed into it
+ * from the BBC URL
+ */
 public class ViewFeedActivity extends AppCompatActivity {
-    ArrayList<RssItem> rssItemList = new ArrayList<>();
-    ArrayList<RssItem> rssItemsFiltered;
-    int textLength;
-    ProgressBar loadProgressBar;
-    ListView listView;
-    RssItem item;
-    SQLiteDatabase sqldb;
-    EditText searchBar;
+    ArrayList<RssItem> rssItemList = new ArrayList<>(); // An array list to hold a complete list of BBC RSS feed items
+    ArrayList<RssItem> rssItemsFiltered;                // An array to hold RSSItems refined by the users search parameters
+    int textLength;                                     // Integer to store the length of a users search keyword
+    ProgressBar loadProgressBar;                        // A user interface element that indicates the progress of an operation
+    ListView listView;                                  // an adapter view that does not know the details, such as type and contents, of the views it contains
+    RssItem item;                                       // Object to store a RSS feed information
+    SQLiteDatabase sqldb;                               // SQLite is a opensource SQL database that stores data to a text file on a device. Android comes in with built in SQLite database implementation
+    EditText searchBar;                                 // An edit text to query a user specified search
 
-    public static final String ITEM_TITLE = "TITLE";
-    public static final String ITEM_DATE= "DATE";
-    public static final String ITEM_DESCRIPTION = "DESCRIPTION";
-    public static final String ITEM_LINK = "LINK";
-    public static final String ITEM_POSITION = "POSITION";
-    public static final String ITEM_ID = "ID";
+    public static final String ITEM_TITLE = "TITLE";                // String to hold the specified RSS feeds title
+    public static final String ITEM_DATE= "DATE";                   // String to hold the specified RSS feeds date
+    public static final String ITEM_DESCRIPTION = "DESCRIPTION";    // String to hold the specified RSS feeds description
+    public static final String ITEM_LINK = "LINK";                  // String to hold the specified RSS feeds link
+    public static final String ITEM_POSITION = "POSITION";          // String to hold the specified RSS feeds position
+    public static final String ITEM_ID = "ID";                      // String to hold the specified RSS feeds id number
 
-
+    // Method called when the ViewFeedActivity is created to display a loading bar and display BBC RSS feeds
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,11 +64,15 @@ public class ViewFeedActivity extends AppCompatActivity {
         listView.setTextFilterEnabled(true);
         RSSAdapter adapter = new RSSAdapter();
         searchBar.addTextChangedListener(new TextWatcher() {
+
+            // Method to update the adapter list
             @Override
                         public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
                         listView.invalidate();
                         adapter.notifyDataSetChanged();
             }
+
+            // Method to update the adapter list
             @Override
                         public void onTextChanged(CharSequence s, int start, int before, int count) {
                         adapter.getFilter().filter(s.toString());
@@ -81,6 +89,7 @@ public class ViewFeedActivity extends AppCompatActivity {
                         listView.setAdapter(adapter);
             }
 
+            // Method to update the adapter list
             @Override
             public void afterTextChanged(Editable s) {
             }
@@ -147,6 +156,7 @@ public class ViewFeedActivity extends AppCompatActivity {
         }));
     }
 
+    // Method to add an RSS item to the database
     protected void addToDatabase(RssItem item) {
         String title = item.getTitle();
         String description = item.getDescription();
@@ -158,6 +168,8 @@ public class ViewFeedActivity extends AppCompatActivity {
 
         sqldb.insert(Database.TABLE_NAME, null, newRowValues);
     }
+
+    // Method to undo adding an RSS item to the database
     protected void undoAdd(RssItem item) {
         Log.i("Undo", "loaded");
         Toast toast = Toast.makeText(getApplicationContext(),
@@ -170,8 +182,10 @@ public class ViewFeedActivity extends AppCompatActivity {
         toast.show();
     }
 
+    // Method to load an RSS feed from a URL from behind the progress bar
     public class RssLoad extends AsyncTask<String, Integer, String> {
 
+        // Method to load an RSS feed
         @Override
         protected String doInBackground(String... args) {
 
@@ -242,6 +256,8 @@ public class ViewFeedActivity extends AppCompatActivity {
 
             return "done";
         }
+
+        // Method to display the progress bar while the feed is loading
         protected void onProgressUpdate(Integer ...value){
             loadProgressBar.setVisibility(View.VISIBLE);
             loadProgressBar.setProgress(value[0]);
@@ -249,6 +265,7 @@ public class ViewFeedActivity extends AppCompatActivity {
 
         }
 
+        // Method to display the RSS feed list after the URL is finished loading
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);

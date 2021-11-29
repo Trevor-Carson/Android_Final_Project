@@ -11,9 +11,14 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+/**
+ * Class to fetch information from the empty activity class and bundle it together
+ */
 public class RSSFragment extends Fragment {
-    Bundle dataFromActivity;
-    private AppCompatActivity parentActivity;
+    Bundle dataFromActivity;                    // Constructs a new, empty Bundle that uses a specific ClassLoader for instantiating Parcelable and Serializable objects
+    private AppCompatActivity parentActivity;   // Base class for activities that wish to use some of the newer platform features on older Android devices
+
+    // Method to create a view based on information generated in the empty activity
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         dataFromActivity = getArguments();
@@ -47,6 +52,8 @@ public class RSSFragment extends Fragment {
         return result;
 
     }
+
+    // Method to attach information about an RSS feed to the parent activity
     public void onAttach(Context context) {
         super.onAttach(context);
         parentActivity = (AppCompatActivity) context;
