@@ -184,7 +184,6 @@ public class ViewFeedActivity extends AppCompatActivity {
                 factory.setNamespaceAware(false);
                 factory1.setNamespaceAware(false);
                 XmlPullParser xpp = factory.newPullParser();
-                XmlPullParser xpp1 = factory1.newPullParser();
                 xpp.setInput(response, "UTF-8");
 
 

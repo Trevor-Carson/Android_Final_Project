@@ -59,35 +59,32 @@ public class RSSAdapter extends BaseAdapter implements Filterable {
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
-              //  Log.d("SEARCHTEXT2", "**** PERFORM FILTERING for: " + charSequence);
+
                 charSequence = charSequence.toString().toLowerCase();
-                FilterResults filts = new FilterResults();
+                FilterResults filterResults = new FilterResults();
                 if (charSequence == null || charSequence.length() == 0){
-                    filts.values = itemList;
-                    filts.count = itemList.size();
+                    filterResults.values = itemList;
+                    filterResults.count = itemList.size();
                 } else {
-                    // We perform filtering operation
-                    ArrayList<RssItem> rssItemrs = new ArrayList<>();
-                    for (RssItem l : itemList){ //you are going to search in labItem that contains the data and not the empty list labrs
+                    // performs filter operation
+                    ArrayList<RssItem> itemsFiltered = new ArrayList<>();
+                    for (RssItem l : itemList){ // loops through itemList
                         if (l.getTitle().startsWith(charSequence.toString())){
-                     //       Log.e("(l.getName().startsWith(charSequence.toString())","" + charSequence);
-                            rssItemrs.add(l); // add to the new list**
+                            itemsFiltered.add(l); // adds items to the list that match the filter
                         }
                     }
-                    filts.values = rssItemrs; //set values to the new list**
-                    filts.count = rssItemrs.size();
-                    //filts.count = labItem.size();
+                    filterResults.values = itemsFiltered; // sets values to the itemsFiltered list
+                    filterResults.count = itemsFiltered.size();
+
                 }
-                return filts;
+                return filterResults;
             }
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                // Now we have to inform the adapter about the new list filtered
-              //  Log.d("SEARCHTEXT1", "**** PUBLISHING RESULTS for: " + charSequence);
-                ArrayList<RssItem> filtered = (ArrayList<RssItem>) filterResults.values;
+                // inform the adapter about the new list filtered
 
-                itemList = filtered; // set the new data as you want  with the new set you've received.**
+                itemList = (ArrayList<RssItem>) filterResults.values;
                 notifyDataSetChanged();
 
             }

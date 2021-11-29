@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 
 public class ViewSavedActivity extends AppCompatActivity {
-    // stores RSS feed information
+
     SQLiteDatabase db;
     public int id;
     Cursor results;
