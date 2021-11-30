@@ -15,10 +15,18 @@ import androidx.fragment.app.Fragment;
  * Class to fetch information from the empty activity class and bundle it together
  */
 public class RSSFragment extends Fragment {
-    Bundle dataFromActivity;                    // Constructs a new, empty Bundle that uses a specific ClassLoader for instantiating Parcelable and Serializable objects
-    private AppCompatActivity parentActivity;   // Base class for activities that wish to use some of the newer platform features on older Android devices
+    /** Constructs a new, empty Bundle that uses a specific ClassLoader for instantiating Parcelable and Serializable objects */
+    Bundle dataFromActivity;
+    /** Base class for activities that wish to use some of the newer platform features on older Android devices */
+    private AppCompatActivity parentActivity;
 
-    // Method to create a view based on information generated in the empty activity
+    /**
+     * Method to create a view based on information generated in the empty activity
+     * @param inflater - Instantiates a layout XML file into its corresponding View objects
+     * @param container - A view object used to contain other views
+     * @param savedInstanceState - Stores the current start of the running application
+     * @return - Returns the result view
+     */
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         dataFromActivity = getArguments();
@@ -53,7 +61,12 @@ public class RSSFragment extends Fragment {
 
     }
 
-    // Method to attach information about an RSS feed to the parent activity
+    //
+
+    /**
+     * Method to attach information about an RSS feed to the parent activity
+     * @param context - object used to obtaining access to database
+     */
     public void onAttach(Context context) {
         super.onAttach(context);
         parentActivity = (AppCompatActivity) context;

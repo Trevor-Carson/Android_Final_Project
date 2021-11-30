@@ -9,15 +9,20 @@ import android.os.Bundle;
  */
 public class EmptyActivity extends AppCompatActivity {
 
-    // Override method that creates and passes data to another activity
+    /**
+     * Override method that creates and passes data to another activity
+     * @param savedInstanceState - Object to hold bundled information to be passed to the the empty activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_empty);
 
-        Bundle dataToPass = getIntent().getExtras();    // Constructs a new, empty Bundle that uses a specific ClassLoader for instantiating Parcelable and Serializable objects
+        /** Constructs a new, empty Bundle that uses a specific ClassLoader for instantiating Parcelable and Serializable objects */
+        Bundle dataToPass = getIntent().getExtras();
 
-        RSSFragment fragment = new RSSFragment();       // Creates a new fragment to be passed to another activity
+        /** Creates a new fragment to be passed to another activity */
+        RSSFragment fragment = new RSSFragment();
         fragment.setArguments(dataToPass);
         getSupportFragmentManager()
                 .beginTransaction()

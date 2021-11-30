@@ -32,23 +32,40 @@ import java.util.ArrayList;
  * from the BBC URL
  */
 public class ViewFeedActivity extends AppCompatActivity {
-    ArrayList<RssItem> rssItemList = new ArrayList<>(); // An array list to hold a complete list of BBC RSS feed items
-    ArrayList<RssItem> rssItemsFiltered;                // An array to hold RSSItems refined by the users search parameters
-    int textLength;                                     // Integer to store the length of a users search keyword
-    ProgressBar loadProgressBar;                        // A user interface element that indicates the progress of an operation
-    ListView listView;                                  // an adapter view that does not know the details, such as type and contents, of the views it contains
-    RssItem item;                                       // Object to store a RSS feed information
-    SQLiteDatabase sqldb;                               // SQLite is a opensource SQL database that stores data to a text file on a device. Android comes in with built in SQLite database implementation
-    EditText searchBar;                                 // An edit text to query a user specified search
+    /** An array list to hold a complete list of BBC RSS feed items */
+    ArrayList<RssItem> rssItemList = new ArrayList<>();
+    /** An array to hold RSSItems refined by the users search parameters */
+    ArrayList<RssItem> rssItemsFiltered;
+    /** Integer to store the length of a users search keyword */
+    int textLength;
+    /** A user interface element that indicates the progress of an operation */
+    ProgressBar loadProgressBar;
+    /** An adapter view that does not know the details, such as type and contents, of the views it contains */
+    ListView listView;
+    /** Object to store a RSS feed information */
+    RssItem item;
+    /** SQLite is a opensource SQL database that stores data to a text file on a device. Android comes in with built in SQLite database implementation */
+    SQLiteDatabase sqldb;
+    /** An edit text to query a user specified search */
+    EditText searchBar;
 
-    public static final String ITEM_TITLE = "TITLE";                // String to hold the specified RSS feeds title
-    public static final String ITEM_DATE= "DATE";                   // String to hold the specified RSS feeds date
-    public static final String ITEM_DESCRIPTION = "DESCRIPTION";    // String to hold the specified RSS feeds description
-    public static final String ITEM_LINK = "LINK";                  // String to hold the specified RSS feeds link
-    public static final String ITEM_POSITION = "POSITION";          // String to hold the specified RSS feeds position
-    public static final String ITEM_ID = "ID";                      // String to hold the specified RSS feeds id number
+    /** String to hold the specified RSS feeds title */
+    public static final String ITEM_TITLE = "TITLE";
+    /** String to hold the specified RSS feeds date */
+    public static final String ITEM_DATE= "DATE";
+    /** String to hold the specified RSS feeds description */
+    public static final String ITEM_DESCRIPTION = "DESCRIPTION";
+    /** String to hold the specified RSS feeds link */
+    public static final String ITEM_LINK = "LINK";
+    /** String to hold the specified RSS feeds position */
+    public static final String ITEM_POSITION = "POSITION";
+    /** String to hold the specified RSS feeds id number */
+    public static final String ITEM_ID = "ID";
 
-    // Method called when the ViewFeedActivity is created to display a loading bar and display BBC RSS feeds
+    /**
+     * Method called when the ViewFeedActivity is created to display a loading bar and display BBC RSS feeds
+     * @param savedInstanceState - load information about saved BBC news feeds from phone
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,14 +82,26 @@ public class ViewFeedActivity extends AppCompatActivity {
         RSSAdapter adapter = new RSSAdapter();
         searchBar.addTextChangedListener(new TextWatcher() {
 
-            // Method to update the adapter list
+            /**
+             * Method to update the adapter list
+             * @param charSequence - holds the character sequence for the adapter
+             * @param i - first iterator
+             * @param i2 - second iterator
+             * @param i3 - third iterator
+             */
             @Override
                         public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
                         listView.invalidate();
                         adapter.notifyDataSetChanged();
             }
 
-            // Method to update the adapter list
+            /**
+             * Method to update the adapter list
+             * @param s - holds the current characters value
+             * @param start - holds the starting character position
+             * @param before - holds the last characters position
+             * @param count - counter for the array
+             */
             @Override
                         public void onTextChanged(CharSequence s, int start, int before, int count) {
                         adapter.getFilter().filter(s.toString());
@@ -89,7 +118,10 @@ public class ViewFeedActivity extends AppCompatActivity {
                         listView.setAdapter(adapter);
             }
 
-            // Method to update the adapter list
+            /**
+             * Method to update the adapter list
+             * @param s -  This is the interface for text whose content and markup can be changed
+             */
             @Override
             public void afterTextChanged(Editable s) {
             }
@@ -156,7 +188,10 @@ public class ViewFeedActivity extends AppCompatActivity {
         }));
     }
 
-    // Method to add an RSS item to the database
+    /**
+     * Method to add an RSS item to the database
+     * @param item - RssItem object to add to the database
+     */
     protected void addToDatabase(RssItem item) {
         String title = item.getTitle();
         String description = item.getDescription();
@@ -169,7 +204,10 @@ public class ViewFeedActivity extends AppCompatActivity {
         sqldb.insert(Database.TABLE_NAME, null, newRowValues);
     }
 
-    // Method to undo adding an RSS item to the database
+    /**
+     * Method to undo adding an RSS item to the database
+     * @param item - RssItem object to undo if added to the database
+     */
     protected void undoAdd(RssItem item) {
         Log.i("Undo", "loaded");
         Toast toast = Toast.makeText(getApplicationContext(),
@@ -182,10 +220,16 @@ public class ViewFeedActivity extends AppCompatActivity {
         toast.show();
     }
 
-    // Method to load an RSS feed from a URL from behind the progress bar
+    /**
+     * Class to load an RSS feed progress bar and a URL
+     */
     public class RssLoad extends AsyncTask<String, Integer, String> {
 
-        // Method to load an RSS feed
+        /**
+         * Method to load an RSS feed
+         * @param args - String to hold the name of the RSS feed to load
+         * @return - returns a list of RSS items from a specified URL
+         */
         @Override
         protected String doInBackground(String... args) {
 
@@ -257,7 +301,10 @@ public class ViewFeedActivity extends AppCompatActivity {
             return "done";
         }
 
-        // Method to display the progress bar while the feed is loading
+        /**
+         * Method to display the progress bar while the feed is loading
+         * @param value - integer to hold the current progress percentage for the bar
+         */
         protected void onProgressUpdate(Integer ...value){
             loadProgressBar.setVisibility(View.VISIBLE);
             loadProgressBar.setProgress(value[0]);
@@ -265,7 +312,10 @@ public class ViewFeedActivity extends AppCompatActivity {
 
         }
 
-        // Method to display the RSS feed list after the URL is finished loading
+        /**
+         * Method to display the RSS feed list after the URL is finished loading
+         * @param s - string to display the items from the RSS feed
+         */
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);

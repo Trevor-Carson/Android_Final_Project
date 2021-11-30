@@ -12,21 +12,29 @@ import android.view.View;
  */
 public class MainActivity extends AppCompatActivity {
 
-    // Override method to set the initial layout to the MainActivity when the application initially opens
+    /**
+     * Override method to set the initial layout to the MainActivity when the application initially opens
+     * @param savedInstanceState - Object to hold the bundled information to pass to main activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // sets the layout for MainActivity as activity_main.xml
     }
 
-    // Method to load BBC RSS news items into ViewFeedActivity when the "Launch RSS Feed" button is clicked
+    /**
+     * Method to load BBC RSS news items into ViewFeedActivity when the "Launch RSS Feed" button is clicked
+     * @param view - View to hold the current activity
+     */
     public void launchRSSFeed(View view) {
         Intent toFeedIntent = new Intent(this, ViewFeedActivity.class);
         this.startActivity(toFeedIntent);
     }
 
-    // Method to load previously saved BBC RSS news items from ViewSavedActivity when the "Launch Saved Items" button is clicked
+    /**
+     * Method to load previously saved BBC RSS news items from ViewSavedActivity when the "Launch Saved Items" button is clicked
+     * @param view - View to hold the current activity
+     */
     public void launchSavedItems(View view) {
        Intent toSavedIntent = new Intent(this, ViewSavedActivity.class);
         this.startActivity(toSavedIntent);
