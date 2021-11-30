@@ -214,7 +214,6 @@ public class ViewFeedActivity extends AppCompatActivity {
                 "Item removed.",
                 Toast.LENGTH_SHORT);
         String title = item.getTitle();
-        String description = item.getDescription();
 
         sqldb.delete(Database.TABLE_NAME, Database.COL_TITLE + "= ?", new String[]{title});
         toast.show();
@@ -248,7 +247,7 @@ public class ViewFeedActivity extends AppCompatActivity {
                 boolean done = false;
                 int eventType = xpp.getEventType();
                 int i = 1;
-                float count = 56; // number of items in BBC RSS feed
+                float count = 62; // number of times the listview loop iterates
 
                 RssItem currentRSSItem = new RssItem();
 
@@ -279,8 +278,10 @@ public class ViewFeedActivity extends AppCompatActivity {
                             if (name.equalsIgnoreCase("item")) {
                                 rssItemList.add(currentRSSItem);
 
-
-                                   float progress = (i / count) * 100;
+                                /**
+                                 * publishes the approximate value of progress at each iteration
+                                 */
+                                float progress = (i / count) * 100;
                                    publishProgress((int)progress);
                                     i++;
 
