@@ -13,14 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Final_Project_RSS_Reader">
         <activity
-            android:name=".EditRssFeedActivity"
+            android:name=".EmptyActivity"
             android:exported="false" />
         <activity
             android:name=".ViewFeedActivity"
-            android:exported="false" />
+            android:exported="true"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
-            android:name=".AddFeedActivity"
-            android:exported="false" />
+            android:name=".ViewSavedActivity"
+            android:exported="true"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
