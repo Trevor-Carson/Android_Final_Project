@@ -18,11 +18,12 @@
         <activity
             android:name=".ViewFeedActivity"
             android:exported="true"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden"
+            />
         <activity
             android:name=".ViewSavedActivity"
             android:exported="true"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

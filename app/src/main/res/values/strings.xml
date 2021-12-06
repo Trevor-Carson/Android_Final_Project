@@ -17,4 +17,6 @@
     <string name='fragment_description'>Description</string>
     <string name='fragment_link'>Link</string>
     <string name='fragment_date'>Pub Date</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
 </resources>

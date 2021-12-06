@@ -1,26 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ViewFeedActivity">
 
-    <ListView
-        android:id="@+id/rssFeedItemListView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/editTextSearch"
-        />
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_height="50dp"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme" />
+
+        <androidx.drawerlayout.widget.DrawerLayout
+            android:id="@+id/navigation_drawer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:openDrawer="start">
+
+            <com.google.android.material.navigation.NavigationView
+                android:id="@+id/navView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:fitsSystemWindows="true"
+                app:menu="@menu/drawer_menu" />
+
+        </androidx.drawerlayout.widget.DrawerLayout>
+    </LinearLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_centerVertical="true"
-        android:visibility="invisible" />
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/editTextSearch"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
+        <ListView
+            android:id="@+id/rssFeedItemListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/editTextSearch" />
 
-</RelativeLayout>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:visibility="invisible" />
+
+        <EditText
+            android:id="@+id/editTextSearch"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" />
+
+        <Button
+            android:id="@+id/buttonClearTextSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/editTextSearch"
+            android:text="Clear Filter" />
+    </RelativeLayout>
+
+</LinearLayout>
