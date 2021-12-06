@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">BBC RSS News Feed</string> <!-- TO TRANSLATE -->
-    <string name="app_titleScreen">BBC News Reader</string> <!-- TO TRANSLATE -->
-    <string name="rss_reader_text">RSS Reader</string> <!-- TO TRANSLATE -->
-    <string name="open_feed_text">Open Feed</string> <!-- TO TRANSLATE -->
-    <string name="feed_name_hint">RSS Feed Name</string> <!-- TO TRANSLATE -->
-    <string name="feed_address_hint">RSS Feed Address</string> <!-- TO TRANSLATE -->
-    <string name="add_feed_text">Add Feed</string> <!-- TO TRANSLATE -->
-    <string name="view_feed_text">View Feed</string> <!-- TO TRANSLATE -->
-    <string name="rss_title_text">Title RSS Feed</string> <!-- TO TRANSLATE -->
-    <string name="rss_url_text">www.rss.feed.com</string> <!-- TO TRANSLATE -->
-    <string name="row_title_text">Title Text View</string> <!-- TO TRANSLATE -->
-    <string name="row_article_text">--Article Description--</string> <!-- TO TRANSLATE -->
-    <string name="row_remove_text">Tap to remove</string> <!-- TO TRANSLATE -->
-    <string name="view_saved_text">View Saved Items</string> <!-- TO TRANSLATE -->
-    <string name='fragment_title'>Title</string> <!-- TO TRANSLATE -->
-    <string name='fragment_description'>Description</string> <!-- TO TRANSLATE -->
-    <string name='fragment_link'>Link</string> <!-- TO TRANSLATE -->
-    <string name='fragment_date'>Pub Date</string> <!-- TO TRANSLATE -->
+    <string name="app_name">Flux RSS BBC News</string>
+    <string name="app_titleScreen">Lecteur BBC News</string>
+    <string name="rss_reader_text">Lecteur RSS</string>
+    <string name="open_feed_text">Ouvrir le flux</string>
+    <string name="feed_name_hint">Nom du flux RSS</string>
+    <string name="feed_address_hint">Adresse du flux RSS</string>
+    <string name="add_feed_text">Ajouter un flux</string>
+    <string name="view_feed_text">Voir le flux</string>
+    <string name="rss_title_text">Titre du flux RSS</string>
+    <string name="rss_url_text">www.rss.feed.com</string>
+    <string name="row_title_text">Titre Text View</string>
+    <string name="row_article_text">--Description de l\'article--</string>
+    <string name="row_remove_text">Appuyer pour effacer</string>
+    <string name="view_saved_text">Voir les articles sauvegardés</string>
+    <string name='fragment_title'>Titre</string>
+    <string name='fragment_description'>Description</string>
+    <string name='fragment_link'>Lien</string>
+    <string name='fragment_date'>Date de publication</string>
+    <string name="drawer_open">Ouvert</string>
+    <string name="drawer_close">Proche</string>
 </resources>
