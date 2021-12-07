@@ -19,4 +19,20 @@
     <string name='fragment_date'>Pub Date</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
+    <string name="clear_text">Clear</string>
+    <string name="help_text">Press and hold an RSS feed to add or remove it from favorites</string>
+    <string name="confirm_help">Okay!</string>
+    <string name="confirm">Yes</string>
+    <string name="deny">No</string>
+    <string name="item_added">Item added to saved items.</string>
+    <string name="item_removed">Item removed.</string>
+    <string name="undo">Undo</string>
+    <string name="article_save">Save this article?</string>
+    <string name="article_delete">Delete this article?</string>
+    <string name="row_id">Row ID: </string>
+    <string name="database_id">Database ID: </string>
+    <string name="home_text">Accueil</string>
+    <string name="favorite_text">Favoris</string>
+    <string name="help_text_2">Aider</string>
+
 </resources>

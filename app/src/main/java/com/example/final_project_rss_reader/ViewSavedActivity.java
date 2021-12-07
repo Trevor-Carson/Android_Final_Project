@@ -15,9 +15,14 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,7 +32,8 @@ import java.util.Map;
 /**
  * Class to view store saved/favorite RSS feeds from a database
  */
-public class ViewSavedActivity extends AppCompatActivity {
+public class ViewSavedActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+
     /**
      * A hash map to store menu items
      */
@@ -52,7 +58,7 @@ public class ViewSavedActivity extends AppCompatActivity {
      * A list view is an adapter view that does not know the details, such as type and contents, of the views it contains
      */
     ListView listView;
-
+    AlertDialog alertHelp;
     /**
      * A button to clear the editText for searching RSS feeds
      */
@@ -80,6 +86,15 @@ public class ViewSavedActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        DrawerLayout drawer = findViewById(R.id.navigation_drawer);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
+                drawer, toolbar, R.string.drawer_open, R.string.drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.navView);
+        navigationView.setNavigationItemSelectedListener(this);
+
         /**
          * A hashmap to map the buttons to their order
          */
@@ -106,22 +121,27 @@ public class ViewSavedActivity extends AppCompatActivity {
         listView.setOnItemLongClickListener((p, b, pos, id) -> {
             RssItem item = savedItems.get(pos);
             AlertDialog alertDelete = new AlertDialog.Builder(this)
-                    .setTitle("Delete this article?")
-                    .setMessage((("Row ID: ") + (pos + 1)) + "\n"
-                            + ("Database ID: ") + (adapter.getItemId(pos)))
+                    .setTitle(String.valueOf(getText(R.string.article_delete)))
+                    .setMessage(((String.valueOf(getText(R.string.row_id))) + (pos + 1)) + "\n"
+                            + (String.valueOf(getText(R.string.database_id))) + (adapter.getItemId(pos)))
 
-                    .setPositiveButton("Yes", (dialog, which) -> {
+                    .setPositiveButton(getString(R.string.confirm), (dialog, which) -> {
                         deleteSavedItem(item);
                         savedItems.remove(pos);
                         adapter.notifyDataSetChanged();
 
                     })
-                    .setNegativeButton("No", null)
+                    .setNegativeButton(getString(R.string.deny), null)
                     .create();
             alertDelete.show();
             return true;
 
         });
+        alertHelp = new AlertDialog.Builder(this)
+                .setTitle(String.valueOf(getString(R.string.help_text)))
+                .setPositiveButton(String.valueOf(getString(R.string.confirm_help)), (dialog, which) -> {
+                })
+                .create();
     }
 
     /**
@@ -143,25 +163,44 @@ public class ViewSavedActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         String msg;
-
-        if (optionsItemMap.containsKey(item.getItemId())) {
-            switch (item.getItemId()) {
-                case R.id.home:
-                    startActivity(new Intent(this, MainActivity.class));
-                    break;
-                case R.id.rss:
-                    startActivity(new Intent(this, ViewFeedActivity.class));
-                    break;
-                case R.id.favorites:
-                    startActivity(new Intent(this, ViewSavedActivity.class));
-                    break;
-            }
-        } else {
-            msg = "Press and hold an RSS feed to add or remove it from favorites";
-            Toast.makeText(ViewSavedActivity.this, msg, Toast.LENGTH_LONG).show();
+        switch (item.getItemId()) {
+            case R.id.home:
+                startActivity(new Intent(this, MainActivity.class));
+                break;
+            case R.id.rss:
+                startActivity(new Intent(this, ViewFeedActivity.class));
+                break;
+            case R.id.favorites:
+                startActivity(new Intent(this, ViewSavedActivity.class));
+                break;
+            case R.id.help:
+                alertHelp.show();
         }
-        return super.onOptionsItemSelected(item);
+
+        return true;
     }
+    public boolean onNavigationItemSelected( MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.home:
+                startActivity(new Intent(this, MainActivity.class));
+                break;
+            case R.id.rss:
+                startActivity(new Intent(this, ViewFeedActivity.class));
+                break;
+            case R.id.favorites:
+                startActivity(new Intent(this, ViewSavedActivity.class));
+                break;
+            case R.id.help:
+                alertHelp.show();
+        }
+
+        DrawerLayout drawerLayout = findViewById(R.id.navigation_drawer);
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        return false;
+    }
+
 
     /**
      * Method to load the RSS feed information from a database

@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.ContentValues;
@@ -15,6 +16,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -40,7 +42,10 @@ import java.util.Map;
  * Class to generate a RSS feed list based on items passed into it
  * from the BBC URL
  */
-public class ViewFeedActivity extends AppCompatActivity {
+public class ViewFeedActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+
+
+
     /**
      * A hash map to store menu items
      */
@@ -83,6 +88,8 @@ public class ViewFeedActivity extends AppCompatActivity {
      */
     Button clearButton;
 
+    AlertDialog alertHelp;
+
     /**
      * String to hold the specified RSS feeds title
      */
@@ -113,6 +120,7 @@ public class ViewFeedActivity extends AppCompatActivity {
      *
      * @param savedInstanceState - load information about saved BBC news feeds from phone
      */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,6 +131,14 @@ public class ViewFeedActivity extends AppCompatActivity {
          */
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        DrawerLayout drawer = findViewById(R.id.navigation_drawer);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
+                drawer, toolbar, R.string.drawer_open, R.string.drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.navView);
+        navigationView.setNavigationItemSelectedListener(this);
 
         /**
          * A hashmap to map the buttons to their order
@@ -210,18 +226,18 @@ public class ViewFeedActivity extends AppCompatActivity {
                 item = rssItemsFiltered.get(pos);
             }
             AlertDialog alertDelete = new AlertDialog.Builder(this)
-                    .setTitle("Save this article?")
-                    .setPositiveButton("Yes", (dialog, which) -> {
+                    .setTitle(String.valueOf(getText(R.string.article_save)))
+                    .setPositiveButton(String.valueOf(getText(R.string.confirm)), (dialog, which) -> {
                         addToDatabase(item);
                         adapter.notifyDataSetChanged();
                         Snackbar snackbar = Snackbar.make(listView,
-                                "Item added to saved items.", Snackbar.LENGTH_SHORT);
-                        snackbar.setAction("UNDO", view -> undoAdd(item));
+                                String.valueOf(getText(R.string.item_added)), Snackbar.LENGTH_SHORT);
+                        snackbar.setAction(String.valueOf(getText(R.string.undo)), view -> undoAdd(item));
 
 
                         snackbar.show();
                     })
-                    .setNegativeButton("No", null)
+                    .setNegativeButton(String.valueOf(getText(R.string.deny)), null)
                     .create();
             alertDelete.show();
             return true;
@@ -259,6 +275,11 @@ public class ViewFeedActivity extends AppCompatActivity {
 
             }
         }));
+        alertHelp = new AlertDialog.Builder(this)
+                .setTitle(String.valueOf(getString(R.string.help_text)))
+                .setPositiveButton(String.valueOf(getString(R.string.confirm_help)), (dialog, which) -> {
+                })
+                .create();
     }
 
     /**
@@ -280,24 +301,42 @@ public class ViewFeedActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         String msg;
-
-        if (optionsItemMap.containsKey(item.getItemId())) {
-            switch (item.getItemId()) {
-                case R.id.home:
-                    startActivity(new Intent(this, MainActivity.class));
-                    break;
-                case R.id.rss:
-                    startActivity(new Intent(this, ViewFeedActivity.class));
-                    break;
-                case R.id.favorites:
-                    startActivity(new Intent(this, ViewSavedActivity.class));
-                    break;
-            }
-        } else {
-            msg = "Press and hold an RSS feed to add or remove it from favorites";
-            Toast.makeText(ViewFeedActivity.this, msg, Toast.LENGTH_LONG).show();
+        switch (item.getItemId()) {
+            case R.id.home:
+                startActivity(new Intent(this, MainActivity.class));
+                break;
+            case R.id.rss:
+                startActivity(new Intent(this, ViewFeedActivity.class));
+                break;
+            case R.id.favorites:
+                startActivity(new Intent(this, ViewSavedActivity.class));
+                break;
+            case R.id.help:
+                alertHelp.show();
         }
-        return super.onOptionsItemSelected(item);
+
+        return true;
+    }
+    public boolean onNavigationItemSelected( MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.home:
+                startActivity(new Intent(this, MainActivity.class));
+                break;
+            case R.id.rss:
+                startActivity(new Intent(this, ViewFeedActivity.class));
+                break;
+            case R.id.favorites:
+                startActivity(new Intent(this, ViewSavedActivity.class));
+                break;
+            case R.id.help:
+                alertHelp.show();
+        }
+
+        DrawerLayout drawerLayout = findViewById(R.id.navigation_drawer);
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        return false;
     }
 
     /**
@@ -323,9 +362,8 @@ public class ViewFeedActivity extends AppCompatActivity {
      * @param item - RssItem object to undo if added to the database
      */
     protected void undoAdd(RssItem item) {
-        Log.i("Undo", "loaded");
         Toast toast = Toast.makeText(getApplicationContext(),
-                "Item removed.",
+                String.valueOf(getText(R.string.item_removed)),
                 Toast.LENGTH_SHORT);
         String title = item.getTitle();
         String description = item.getDescription();

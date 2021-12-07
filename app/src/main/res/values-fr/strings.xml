@@ -20,4 +20,20 @@
     <string name='fragment_date'>Date de publication</string>
     <string name="drawer_open">Ouvert</string>
     <string name="drawer_close">Proche</string>
+    <string name="clear_text">Effacer</string>
+    <string name="help_text">Appuyez et maintenez enforcé un flux RSS pour l\'ajouter ou le retirer des favoris</string>
+    <string name="confirm_help">Oui !</string>
+    <string name="confirm">Oui</string>
+    <string name="deny">Non</string>
+    <string name="item_added">Article ajouté aux articles sauvegardés.</string>
+    <string name="item_removed">Article effacé.</string>
+    <string name="undo">Annuler</string>
+    <string name="article_save">Voulez-vous sauvegarder cet article ?</string>
+
+    <string name="article_delete">Voulez-vous effacer cet article ?</string>
+    <string name="row_id">ID Ligne : </string>
+    <string name="database_id">ID Base de données : </string>
+    <string name="home_text">Home</string>
+    <string name="favorite_text">Favourites</string>
+    <string name="help_text_2">Help</string>
 </resources>
