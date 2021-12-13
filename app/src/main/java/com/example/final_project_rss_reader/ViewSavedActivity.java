@@ -298,6 +298,9 @@ public class ViewSavedActivity extends AppCompatActivity implements NavigationVi
                 break;
             case R.id.help:
                 alertHelp.show();
+                break;
+            case R.id.logout:
+                startActivity(new Intent(this, LoginActivity.class));
         }
 
         return true;
@@ -316,6 +319,9 @@ public class ViewSavedActivity extends AppCompatActivity implements NavigationVi
                 break;
             case R.id.help:
                 alertHelp.show();
+                break;
+            case R.id.logout:
+                startActivity(new Intent(this, LoginActivity.class));
         }
 
         DrawerLayout drawerLayout = findViewById(R.id.navigation_drawer);

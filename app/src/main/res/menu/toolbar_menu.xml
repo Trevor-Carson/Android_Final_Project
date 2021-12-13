@@ -29,4 +29,10 @@
         android:icon="@drawable/question"
         android:orderInCategory="4"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/logout"
+        android:title="Logout"
+        android:icon="@drawable/logout"
+        android:orderInCategory="5"
+        app:showAsAction="never" />
 </menu>
