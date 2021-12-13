@@ -3,22 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:layout_marginTop="30dp">
 
     <LinearLayout
+        android:id="@+id/linear1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@color/grey2"
+        android:clipToPadding="false"
+        android:elevation="5dp"
         android:orientation="vertical"
-        android:paddingBottom="40dp">
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:stateListAnimator="@null">
 
         <TextView
             android:id="@+id/titleTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
-            android:background="@color/grey2"
-            android:paddingTop="30dp"
+            android:shadowColor="@color/grey"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
             android:text="@string/app_name"
             android:textAlignment="center"
             android:textColor="@color/grey3"
@@ -29,12 +37,12 @@
             android:id="@+id/titleTextView1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/titleTextView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="60dp"
-            android:background="@color/grey2"
             android:paddingTop="5dp"
-            android:paddingBottom="25dp"
+            android:paddingBottom="10dp"
+            android:shadowColor="@color/grey"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
             android:text="By Kaitlyn Gatineau &amp; Trevor Carson"
             android:textAlignment="center"
             android:textColor="@color/grey3"
@@ -47,7 +55,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:clipToPadding="false"
+        android:gravity="center"
         android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="70dp"
+        android:paddingEnd="20dp"
         android:paddingBottom="30dp">
 
         <Button
@@ -58,70 +71,31 @@
             android:layout_weight="1"
             android:background="@color/grey3"
             android:drawableEnd="@drawable/rss"
+            android:elevation="5dp"
             android:onClick="launchRSSFeed"
             android:padding="10dp"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
+            android:stateListAnimator="@null"
+
             android:text="@string/view_feed_text"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+
+            />
 
         <Button
             android:id="@+id/viewSavedButton"
             android:layout_width="160dp"
             android:layout_height="65dp"
             android:layout_marginTop="10dp"
-            android:layout_weight="1"
             android:background="@color/grey3"
             android:drawableEnd="@drawable/bookmark"
+            android:elevation="5dp"
             android:onClick="launchSavedItems"
-            android:padding="10dp"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
+            android:stateListAnimator="@null"
             android:text="@string/favorite_text"
             android:textColor="@color/white" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/rss_layout"
-        android:layout_centerInParent="true"
-        android:orientation="vertical">
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="fill_horizontal"
-            android:text="Email:"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/email"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter Email Address Here"
-            android:inputType="textEmailAddress" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Password:"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword" />
-
-        <Button
-            android:id="@+id/login"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/grey3"
-            android:text="Login"
-            android:textColor="@color/white" />
-
     </LinearLayout>
 </RelativeLayout>

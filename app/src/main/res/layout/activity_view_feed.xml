@@ -47,17 +47,16 @@
 
                 <EditText
                     android:id="@+id/editTextSearch"
-                    android:layout_width="300dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true" />
 
                 <Button
                     android:id="@+id/buttonClearTextSearch"
-                    android:layout_width="wrap_content"
+                    android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_toRightOf="@id/editTextSearch"
                     android:text="@string/clear_text"
                     android:background="@color/grey2"/>
             </RelativeLayout>
