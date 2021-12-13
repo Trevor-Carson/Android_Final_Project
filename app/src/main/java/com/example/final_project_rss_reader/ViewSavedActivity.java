@@ -339,7 +339,7 @@ public class ViewSavedActivity extends AppCompatActivity implements NavigationVi
         Database dbOpener = new Database(this);
         db = dbOpener.getWritableDatabase();
 
-        String[] column = {Database.COL_ID, Database.COL_TITLE, Database.COL_DESCRIPTION};
+        String[] column = {Database.COL_ID, Database.COL_TITLE, Database.COL_DESCRIPTION, Database.COL_LINK, Database.COL_PUB_DATE};
 
         results = db.query(false, Database.TABLE_NAME, column, null, null,
                 null, null, null, null);
@@ -350,6 +350,8 @@ public class ViewSavedActivity extends AppCompatActivity implements NavigationVi
         int titleColIndex = results.getColumnIndex(Database.COL_TITLE);
         /** Integer to hold the database column number for the RSS description */
         int descColIndex = results.getColumnIndex(Database.COL_DESCRIPTION);
+        int linkColIndex = results.getColumnIndex(Database.COL_LINK);
+        int dateColIndex = results.getColumnIndex(Database.COL_PUB_DATE);
 
 
         while (results.moveToNext()) {
@@ -359,7 +361,9 @@ public class ViewSavedActivity extends AppCompatActivity implements NavigationVi
             String description = results.getString(descColIndex);
             /** Long to hold the value of the RSS id from the database */
             long id = results.getLong(idColIndex);
-            savedItems.add(new RssItem(id, title, description));
+            String link = results.getString(linkColIndex);
+            String date = results.getString(dateColIndex);
+            savedItems.add(new RssItem(id, title, description, link, date));
         }
         printCursor(results, db.getVersion());
     }

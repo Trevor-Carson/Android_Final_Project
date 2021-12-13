@@ -353,10 +353,14 @@ public class ViewFeedActivity extends AppCompatActivity implements NavigationVie
     protected void addToDatabase(RssItem item) {
         String title = item.getTitle();
         String description = item.getDescription();
+        String link = item.getLink();
+        String pubDate = item.getPubDate();
 
         ContentValues newRowValues = new ContentValues();
         newRowValues.put(Database.COL_DESCRIPTION, description);
         newRowValues.put(Database.COL_TITLE, title);
+        newRowValues.put(Database.COL_LINK, link);
+        newRowValues.put(Database.COL_PUB_DATE, pubDate);
         // Log.i("DB values", String.valueOf(newRowValues));
 
         sqldb.insert(Database.TABLE_NAME, null, newRowValues);
