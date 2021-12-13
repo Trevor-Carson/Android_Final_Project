@@ -113,8 +113,8 @@ public class ViewSavedActivity extends AppCompatActivity implements NavigationVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_feed);
         loadDatabaseData();
-        listView = (ListView) findViewById(R.id.rssFeedItemListView);
-        ListView listView = (ListView) findViewById(R.id.rssFeedItemListView);
+        listView = findViewById(R.id.rssFeedItemListView);
+        ListView listView = findViewById(R.id.rssFeedItemListView);
 
         /**
          * Initialize the toolbar
@@ -141,17 +141,12 @@ public class ViewSavedActivity extends AppCompatActivity implements NavigationVi
         /**
          * Method to clear the RSS search editText on button click
          */
-        searchBar = (EditText) findViewById(R.id.editTextSearch);
-        clearButton = (Button) findViewById(R.id.buttonClearTextSearch);
+        searchBar = findViewById(R.id.editTextSearch);
+        clearButton = findViewById(R.id.buttonClearTextSearch);
         listView.setTextFilterEnabled(true);
         RSSAdapter adapter1 = new RSSAdapter();
 
-        clearButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                searchBar.setText("");
-            }
-        });
+        clearButton.setOnClickListener(view -> searchBar.setText(""));
         searchBar.addTextChangedListener(new TextWatcher() {
 
 
@@ -179,7 +174,7 @@ public class ViewSavedActivity extends AppCompatActivity implements NavigationVi
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 adapter1.getFilter().filter(s.toString());
                 textLength = s.length();
-                rssItemsFiltered = new ArrayList<RssItem>();
+                rssItemsFiltered = new ArrayList<>();
                 for (RssItem ll : savedItems) {
                     if (textLength <= ll.getTitle().length()) {
                         if (ll.getTitle().toLowerCase().contains(s.toString().toLowerCase())) {
@@ -204,6 +199,9 @@ public class ViewSavedActivity extends AppCompatActivity implements NavigationVi
         adapter.notifyDataSetChanged();
         boolean isTablet = findViewById(R.id.frameLayout) != null;
 
+        /**
+         * Long click to delete an article
+         */
         listView.setOnItemLongClickListener((p, b, pos, id) -> {
             if (textLength == 0) {
                 item = savedItems.get(pos);
@@ -213,7 +211,7 @@ public class ViewSavedActivity extends AppCompatActivity implements NavigationVi
             AlertDialog alertDelete = new AlertDialog.Builder(this)
                     .setTitle(String.valueOf(getText(R.string.article_delete)))
                     .setMessage(((String.valueOf(getText(R.string.row_id))) + (pos + 1)) + "\n"
-                            + (String.valueOf(getText(R.string.database_id))) + (adapter.getItemId(pos)))
+                            + (getText(R.string.database_id)) + (adapter.getItemId(pos)))
 
                     .setPositiveButton(getString(R.string.confirm), (dialog, which) -> {
                         deleteSavedItem(item);
@@ -227,6 +225,10 @@ public class ViewSavedActivity extends AppCompatActivity implements NavigationVi
             return true;
 
         });
+
+        /**
+         * Click to view fragment
+         */
         listView.setOnItemClickListener(((parent, view, position, id) -> {
             Bundle dataToPass = new Bundle();
             if (textLength == 0) {

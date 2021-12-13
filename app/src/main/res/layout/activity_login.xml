@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="5dp"
             android:paddingBottom="10dp"
-            android:text="By Kaitlyn Gatineau &amp; Trevor Carson"
+            android:text="@string/app_author"
             android:textAlignment="center"
             android:textColor="@color/grey3"
             android:textSize="15sp"
@@ -66,15 +66,17 @@
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="1"
-            android:text="Email:"
+            android:hint="@string/email_textView"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/email"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Email Address..."
-            android:inputType="textEmailAddress" />
+            android:hint="@string/email_editText"
+            android:inputType="textEmailAddress"
+            android:textCursorDrawable="@null"
+            android:backgroundTint="@color/grey3"/>
 
         <TextView
             android:layout_width="fill_parent"
@@ -83,14 +85,16 @@
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="1"
-            android:text="Password:"
+            android:text="@string/password_textView"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/password"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textCursorDrawable="@null"
+            android:backgroundTint="@color/grey3"/>
 
         <Button
             android:id="@+id/login"
@@ -99,7 +103,7 @@
             android:background="@color/grey3"
             android:elevation="5dp"
             android:stateListAnimator="@null"
-            android:text="Login"
+            android:text="@string/login_textView"
             android:textColor="@color/white" />
     </LinearLayout>
 </RelativeLayout>

@@ -42,29 +42,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/header_title"
-
-        android:layout_toRightOf="@id/android_img"
-        android:text="CST2335 - December 2021"
+        android:layout_toEndOf="@id/android_img"
+        android:text="@string/app_details1"
         android:layout_alignParentEnd="true"
         android:layout_alignEnd="@+id/android_img"
         android:paddingTop="10dp"
         android:paddingEnd="10dp"
         android:textColor="@color/grey3"
-        android:textSize="12dp"
+        android:textSize="12sp"
         android:textAlignment="center"/>
     <TextView
         android:id="@+id/version_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/date_text"
-
-        android:layout_toRightOf="@id/android_img"
-        android:text="Version 1.0"
+        android:layout_toEndOf="@id/android_img"
+        android:text="@string/app_version"
         android:layout_alignParentEnd="true"
         android:layout_alignEnd="@+id/android_img"
         android:paddingEnd="10dp"
         android:textColor="@color/grey3"
-        android:textSize="12dp"
+        android:textSize="12sp"
         android:textAlignment="center"/>
 
 </RelativeLayout>
@@ -76,14 +74,14 @@
         android:layout_below="@+id/relative_1"
         android:layout_centerHorizontal="true"
         android:paddingBottom="10dp"
-        android:text="Kaitlyn Gatineau / Trevor Carson"
-        android:textColor="@color/grey3"
-        android:textSize="15dp"
-        android:textStyle="bold"             android:shadowColor="@color/grey"
+        android:shadowColor="@color/grey"
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowRadius="1"
-        />
+        android:text="@string/app_author"
+        android:textColor="@color/grey3"
+        android:textSize="15sp"
+        android:textStyle="bold" />
 
 
 </RelativeLayout>

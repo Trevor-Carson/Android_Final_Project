@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         ((EditText) findViewById(R.id.email)).setText(savedEmail);
 
         // When the login button is clicked, transition to the Profile activity.
-        ((Button) findViewById(R.id.login)).setOnClickListener(clk -> {
+        findViewById(R.id.login).setOnClickListener(clk -> {
             // Saving the email to the shared preferences while clicking the button wasn't required, but it's helpful.
             saveEmailToPreferences();
             startActivity(new Intent(this, MainActivity.class));

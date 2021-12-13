@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_author">Kaitlyn Gatineau &amp; Trevor Carson</string>
     <string name="app_name">Flux RSS BBC News</string>
     <string name="app_titleScreen">Lecteur BBC News</string>
     <string name="rss_reader_text">Lecteur RSS</string>
@@ -28,11 +29,18 @@
     <string name="item_removed">Article effacé.</string>
     <string name="undo">Annuler</string>
     <string name="article_save">Voulez-vous sauvegarder cet article ?</string>
-
     <string name="article_delete">Voulez-vous effacer cet article ?</string>
     <string name="row_id">ID Ligne : </string>
     <string name="database_id">ID Base de données : </string>
     <string name="home_text">Accueil</string>
     <string name="favorite_text">Favoris</string>
     <string name="help_text_2">Aider</string>
+    <string name="email_textView">Adresse e-mail:</string>
+    <string name="email_editText">Saisissez votre adresse e-mail</string>
+    <string name="password_textView">Mot de passe:</string>
+    <string name="login_textView">Se connecter</string>
+    <string name="app_details1">CST2335 - Décembre 2021"</string>
+    <string name="app_version">Version 1.0</string>
+    <string name="link_below">Voir lien suivant:</string>
+    <string name="hide_button">Masquer</string>
 </resources>
