@@ -18,7 +18,8 @@
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme" />
+            android:theme="?attr/actionBarTheme"
+            app:popupTheme="@style/MyDarkToolbarStyle"/>
 
         <androidx.drawerlayout.widget.DrawerLayout
             android:id="@+id/navigation_drawer"
@@ -55,8 +56,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_toRightOf="@id/editTextSearch"
-                    android:text="@string/clear_text" />
+                    android:text="@string/clear_text"
+                    android:background="@color/grey2"/>
             </RelativeLayout>
             <com.google.android.material.navigation.NavigationView
                 android:id="@+id/navView"
@@ -65,7 +68,11 @@
                 android:layout_gravity="start"
                 android:fitsSystemWindows="true"
                 app:headerLayout="@layout/nav_header"
-                app:menu="@menu/toolbar_menu" />
+                app:menu="@menu/toolbar_menu"
+                android:background="@color/grey3"
+                app:itemTextColor="@color/white"
+                app:itemIconTint="@color/white"
+                />
         </androidx.drawerlayout.widget.DrawerLayout>
     </LinearLayout>
 </LinearLayout>

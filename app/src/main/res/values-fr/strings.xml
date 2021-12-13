@@ -13,7 +13,6 @@
     <string name="row_title_text">Titre Text View</string>
     <string name="row_article_text">--Description de l\'article--</string>
     <string name="row_remove_text">Appuyer pour effacer</string>
-    <string name="view_saved_text">Voir les articles sauvegardés</string>
     <string name='fragment_title'>Titre</string>
     <string name='fragment_description'>Description</string>
     <string name='fragment_link'>Lien</string>
@@ -33,7 +32,7 @@
     <string name="article_delete">Voulez-vous effacer cet article ?</string>
     <string name="row_id">ID Ligne : </string>
     <string name="database_id">ID Base de données : </string>
-    <string name="home_text">Home</string>
-    <string name="favorite_text">Favourites</string>
-    <string name="help_text_2">Help</string>
+    <string name="home_text">Accueil</string>
+    <string name="favorite_text">Favoris</string>
+    <string name="help_text_2">Aider</string>
 </resources>

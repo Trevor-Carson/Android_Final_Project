@@ -12,7 +12,6 @@
     <string name="row_title_text">Title Text View</string>
     <string name="row_article_text">--Article Description--</string>
     <string name="row_remove_text">Tap to remove</string>
-    <string name="view_saved_text">View Saved Items</string>
     <string name='fragment_title'>Title</string>
     <string name='fragment_description'>Description</string>
     <string name='fragment_link'>Link</string>
@@ -31,8 +30,9 @@
     <string name="article_delete">Delete this article?</string>
     <string name="row_id">Row ID: </string>
     <string name="database_id">Database ID: </string>
-    <string name="home_text">Accueil</string>
-    <string name="favorite_text">Favoris</string>
-    <string name="help_text_2">Aider</string>
+
+    <string name="home_text">Home</string>
+    <string name="favorite_text">Saved Items</string>
+    <string name="help_text_2">Help</string>
 
 </resources>

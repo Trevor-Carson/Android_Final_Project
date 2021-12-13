@@ -4,21 +4,21 @@
 
     <item
         android:id="@+id/home"
-        android:icon="@drawable/ui_home_button"
+        android:icon="@drawable/house"
         android:orderInCategory="1"
         android:title="@string/home_text"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/rss"
-        android:icon="@drawable/ui_rss_button"
+        android:icon="@drawable/rss"
         android:orderInCategory="2"
         android:title="RSS"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/favorites"
-        android:icon="@drawable/ui_fav_button"
+        android:icon="@drawable/bookmark"
         android:orderInCategory="3"
         android:title="@string/favorite_text"
         app:showAsAction="always" />
@@ -26,5 +26,7 @@
     <item
         android:id="@+id/help"
         android:title="@string/help_text_2"
+        android:icon="@drawable/question"
+        android:orderInCategory="4"
         app:showAsAction="never" />
 </menu>
