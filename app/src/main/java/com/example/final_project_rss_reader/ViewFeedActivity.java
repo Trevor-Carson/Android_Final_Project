@@ -150,13 +150,8 @@ public class ViewFeedActivity extends AppCompatActivity implements NavigationVie
         /**
          * Method to clear the RSS search editText on button click
          */
-        clearButton = (Button) findViewById(R.id.buttonClearTextSearch);
-        clearButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                searchBar.setText("");
-            }
-        });
+        clearButton = findViewById(R.id.buttonClearTextSearch);
+        clearButton.setOnClickListener(view -> searchBar.setText(""));
 
         RssLoad loadRss = new RssLoad();
 
@@ -164,8 +159,8 @@ public class ViewFeedActivity extends AppCompatActivity implements NavigationVie
         loadProgressBar.setVisibility(View.VISIBLE);
 
         loadRss.execute("http://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml");
-        listView = (ListView) findViewById(R.id.rssFeedItemListView);
-        searchBar = (EditText) findViewById(R.id.editTextSearch);
+        listView = findViewById(R.id.rssFeedItemListView);
+        searchBar = findViewById(R.id.editTextSearch);
         listView.setTextFilterEnabled(true);
         RSSAdapter adapter = new RSSAdapter();
         searchBar.addTextChangedListener(new TextWatcher() {
@@ -195,7 +190,7 @@ public class ViewFeedActivity extends AppCompatActivity implements NavigationVie
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 adapter.getFilter().filter(s.toString());
                 textLength = s.length();
-                rssItemsFiltered = new ArrayList<RssItem>();
+                rssItemsFiltered = new ArrayList<>();
                 for (RssItem ll : rssItemList) {
                     if (textLength <= ll.getTitle().length()) {
                         if (ll.getTitle().toLowerCase().contains(s.toString().toLowerCase())) {
@@ -219,6 +214,9 @@ public class ViewFeedActivity extends AppCompatActivity implements NavigationVie
         sqldb = db.getWritableDatabase();
         boolean isTablet = findViewById(R.id.frameLayout) != null;
 
+        /**
+         * Long click to save an article
+         */
         listView.setOnItemLongClickListener((p, b, pos, id) -> {
             if (textLength == 0) {
                 item = rssItemList.get(pos);
@@ -313,6 +311,9 @@ public class ViewFeedActivity extends AppCompatActivity implements NavigationVie
                 break;
             case R.id.help:
                 alertHelp.show();
+                break;
+            case R.id.logout:
+                startActivity(new Intent(this, LoginActivity.class));
         }
 
         return true;
@@ -331,6 +332,9 @@ public class ViewFeedActivity extends AppCompatActivity implements NavigationVie
                 break;
             case R.id.help:
                 alertHelp.show();
+                break;
+            case R.id.logout:
+                startActivity(new Intent(this, LoginActivity.class));
         }
 
         DrawerLayout drawerLayout = findViewById(R.id.navigation_drawer);
@@ -347,10 +351,14 @@ public class ViewFeedActivity extends AppCompatActivity implements NavigationVie
     protected void addToDatabase(RssItem item) {
         String title = item.getTitle();
         String description = item.getDescription();
+        String link = item.getLink();
+        String pubDate = item.getPubDate();
 
         ContentValues newRowValues = new ContentValues();
         newRowValues.put(Database.COL_DESCRIPTION, description);
         newRowValues.put(Database.COL_TITLE, title);
+        newRowValues.put(Database.COL_LINK, link);
+        newRowValues.put(Database.COL_PUB_DATE, pubDate);
         // Log.i("DB values", String.valueOf(newRowValues));
 
         sqldb.insert(Database.TABLE_NAME, null, newRowValues);
@@ -469,7 +477,7 @@ public class ViewFeedActivity extends AppCompatActivity implements NavigationVie
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            ListView listView = (ListView) findViewById(R.id.rssFeedItemListView);
+            ListView listView = findViewById(R.id.rssFeedItemListView);
             RSSAdapter adapter = new RSSAdapter(ViewFeedActivity.this, rssItemList);
             listView.setAdapter(adapter);
             adapter.notifyDataSetChanged();

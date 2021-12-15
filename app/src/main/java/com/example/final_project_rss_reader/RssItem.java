@@ -36,6 +36,14 @@ public class RssItem {
     public RssItem () {
     }
 
+    public RssItem(long id, String title, String description, String link, String date) {
+        this.title = title;
+        this.id = id;
+        this.description = description;
+        this.link = link;
+        this.pubDate = date;
+    }
+
     /**
      * Getter method for the RSS URL's link String
      * @return - RSS URL's link String

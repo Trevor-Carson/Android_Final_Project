@@ -13,13 +13,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Final_Project_RSS_Reader">
         <activity
+            android:name=".LoginActivity"
+            android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+        <activity
             android:name=".EmptyActivity"
             android:exported="false" />
         <activity
             android:name=".ViewFeedActivity"
             android:exported="true"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ViewSavedActivity"
             android:exported="true"
@@ -27,13 +35,8 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_titleScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:label="@string/app_titleScreen"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

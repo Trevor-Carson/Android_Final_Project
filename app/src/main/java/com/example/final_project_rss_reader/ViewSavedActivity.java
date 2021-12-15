@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -57,7 +59,40 @@ public class ViewSavedActivity extends AppCompatActivity implements NavigationVi
     /**
      * A list view is an adapter view that does not know the details, such as type and contents, of the views it contains
      */
+    /**
+     * Integer to store the length of a users search keyword
+     */
+    int textLength;
+    /**
+     * An array to hold RSSItems refined by the users search parameters
+     */
+    ArrayList<RssItem> rssItemsFiltered;
+    /**
+     * String to hold the specified RSS feeds title
+     */
+    public static final String ITEM_TITLE = "TITLE";
+    /**
+     * String to hold the specified RSS feeds date
+     */
+    public static final String ITEM_DATE = "DATE";
+    /**
+     * String to hold the specified RSS feeds description
+     */
+    public static final String ITEM_DESCRIPTION = "DESCRIPTION";
+    /**
+     * String to hold the specified RSS feeds link
+     */
+    public static final String ITEM_LINK = "LINK";
+    /**
+     * String to hold the specified RSS feeds position
+     */
+    public static final String ITEM_POSITION = "POSITION";
+    /**
+     * String to hold the specified RSS feeds id number
+     */
+    public static final String ITEM_ID = "ID";
     ListView listView;
+
     AlertDialog alertHelp;
     /**
      * A button to clear the editText for searching RSS feeds
@@ -73,12 +108,13 @@ public class ViewSavedActivity extends AppCompatActivity implements NavigationVi
      *
      * @param savedInstanceState - Object to store bundled information to pass to the view feed activity
      */
+    RssItem item;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_feed);
         loadDatabaseData();
-        listView = (ListView) findViewById(R.id.rssFeedItemListView);
-        ListView listView = (ListView) findViewById(R.id.rssFeedItemListView);
+        listView = findViewById(R.id.rssFeedItemListView);
+        ListView listView = findViewById(R.id.rssFeedItemListView);
 
         /**
          * Initialize the toolbar
@@ -105,25 +141,77 @@ public class ViewSavedActivity extends AppCompatActivity implements NavigationVi
         /**
          * Method to clear the RSS search editText on button click
          */
-        searchBar = (EditText) findViewById(R.id.editTextSearch);
-        clearButton = (Button) findViewById(R.id.buttonClearTextSearch);
-        clearButton.setOnClickListener(new View.OnClickListener() {
+        searchBar = findViewById(R.id.editTextSearch);
+        clearButton = findViewById(R.id.buttonClearTextSearch);
+        listView.setTextFilterEnabled(true);
+        RSSAdapter adapter1 = new RSSAdapter();
+
+        clearButton.setOnClickListener(view -> searchBar.setText(""));
+        searchBar.addTextChangedListener(new TextWatcher() {
+
+
+            /**
+             * Method to update the adapter list
+             * @param charSequence - holds the character sequence for the adapter
+             * @param i - first iterator
+             * @param i2 - second iterator
+             * @param i3 - third iterator
+             */
             @Override
-            public void onClick(View view) {
-                searchBar.setText("");
+            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+                listView.invalidate();
+                adapter1.notifyDataSetChanged();
+            }
+
+            /**
+             * Method to update the adapter list
+             * @param s - holds the current characters value
+             * @param start - holds the starting character position
+             * @param before - holds the last characters position
+             * @param count - counter for the array
+             */
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                adapter1.getFilter().filter(s.toString());
+                textLength = s.length();
+                rssItemsFiltered = new ArrayList<>();
+                for (RssItem ll : savedItems) {
+                    if (textLength <= ll.getTitle().length()) {
+                        if (ll.getTitle().toLowerCase().contains(s.toString().toLowerCase())) {
+                            rssItemsFiltered.add(ll);
+                        }
+                    }
+                }
+                RSSAdapter adapter = new RSSAdapter(ViewSavedActivity.this, rssItemsFiltered);
+                listView.setAdapter(adapter);
+            }
+
+            /**
+             * Method to update the adapter list
+             * @param s -  This is the interface for text whose content and markup can be changed
+             */
+            @Override
+            public void afterTextChanged(Editable s) {
             }
         });
-
         RSSAdapter adapter = new RSSAdapter(ViewSavedActivity.this, savedItems);
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        boolean isTablet = findViewById(R.id.frameLayout) != null;
 
+        /**
+         * Long click to delete an article
+         */
         listView.setOnItemLongClickListener((p, b, pos, id) -> {
-            RssItem item = savedItems.get(pos);
+            if (textLength == 0) {
+                item = savedItems.get(pos);
+            } else {
+                item = rssItemsFiltered.get(pos);
+            }
             AlertDialog alertDelete = new AlertDialog.Builder(this)
                     .setTitle(String.valueOf(getText(R.string.article_delete)))
                     .setMessage(((String.valueOf(getText(R.string.row_id))) + (pos + 1)) + "\n"
-                            + (String.valueOf(getText(R.string.database_id))) + (adapter.getItemId(pos)))
+                            + (getText(R.string.database_id)) + (adapter.getItemId(pos)))
 
                     .setPositiveButton(getString(R.string.confirm), (dialog, which) -> {
                         deleteSavedItem(item);
@@ -137,11 +225,48 @@ public class ViewSavedActivity extends AppCompatActivity implements NavigationVi
             return true;
 
         });
+
+        /**
+         * Click to view fragment
+         */
+        listView.setOnItemClickListener(((parent, view, position, id) -> {
+            Bundle dataToPass = new Bundle();
+            if (textLength == 0) {
+                dataToPass.putString(ITEM_TITLE, savedItems.get(position).getTitle());
+                dataToPass.putString(ITEM_DATE, savedItems.get(position).getPubDate());
+                dataToPass.putString(ITEM_DESCRIPTION, savedItems.get(position).getDescription());
+                dataToPass.putString(ITEM_LINK, savedItems.get(position).getLink());
+
+            } else {
+
+                dataToPass.putString(ITEM_TITLE, rssItemsFiltered.get(position).getTitle());
+                dataToPass.putString(ITEM_DATE, rssItemsFiltered.get(position).getPubDate());
+                dataToPass.putString(ITEM_DESCRIPTION, rssItemsFiltered.get(position).getDescription());
+                dataToPass.putString(ITEM_LINK, rssItemsFiltered.get(position).getLink());
+            }
+            dataToPass.putInt(ITEM_POSITION, position);
+            dataToPass.putLong(ITEM_ID, id);
+            RSSFragment fragment = new RSSFragment();
+
+            if (isTablet) {
+                fragment.setArguments(dataToPass);
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frameLayout, fragment)
+                        .commit();
+            } else {
+                Intent nextActivity = new Intent(ViewSavedActivity.this, EmptyActivity.class);
+                nextActivity.putExtras(dataToPass);
+                startActivity(nextActivity);
+
+            }
+        }));
         alertHelp = new AlertDialog.Builder(this)
                 .setTitle(String.valueOf(getString(R.string.help_text)))
                 .setPositiveButton(String.valueOf(getString(R.string.confirm_help)), (dialog, which) -> {
                 })
                 .create();
+
     }
 
     /**
@@ -175,6 +300,9 @@ public class ViewSavedActivity extends AppCompatActivity implements NavigationVi
                 break;
             case R.id.help:
                 alertHelp.show();
+                break;
+            case R.id.logout:
+                startActivity(new Intent(this, LoginActivity.class));
         }
 
         return true;
@@ -193,6 +321,9 @@ public class ViewSavedActivity extends AppCompatActivity implements NavigationVi
                 break;
             case R.id.help:
                 alertHelp.show();
+                break;
+            case R.id.logout:
+                startActivity(new Intent(this, LoginActivity.class));
         }
 
         DrawerLayout drawerLayout = findViewById(R.id.navigation_drawer);
@@ -210,7 +341,7 @@ public class ViewSavedActivity extends AppCompatActivity implements NavigationVi
         Database dbOpener = new Database(this);
         db = dbOpener.getWritableDatabase();
 
-        String[] column = {Database.COL_ID, Database.COL_TITLE, Database.COL_DESCRIPTION};
+        String[] column = {Database.COL_ID, Database.COL_TITLE, Database.COL_DESCRIPTION, Database.COL_LINK, Database.COL_PUB_DATE};
 
         results = db.query(false, Database.TABLE_NAME, column, null, null,
                 null, null, null, null);
@@ -221,6 +352,8 @@ public class ViewSavedActivity extends AppCompatActivity implements NavigationVi
         int titleColIndex = results.getColumnIndex(Database.COL_TITLE);
         /** Integer to hold the database column number for the RSS description */
         int descColIndex = results.getColumnIndex(Database.COL_DESCRIPTION);
+        int linkColIndex = results.getColumnIndex(Database.COL_LINK);
+        int dateColIndex = results.getColumnIndex(Database.COL_PUB_DATE);
 
 
         while (results.moveToNext()) {
@@ -230,7 +363,9 @@ public class ViewSavedActivity extends AppCompatActivity implements NavigationVi
             String description = results.getString(descColIndex);
             /** Long to hold the value of the RSS id from the database */
             long id = results.getLong(idColIndex);
-            savedItems.add(new RssItem(id, title, description));
+            String link = results.getString(linkColIndex);
+            String date = results.getString(dateColIndex);
+            savedItems.add(new RssItem(id, title, description, link, date));
         }
         printCursor(results, db.getVersion());
     }

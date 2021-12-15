@@ -22,6 +22,11 @@ public class Database extends SQLiteOpenHelper {
     /** String holding the description text for the saved feed */
     public static final String COL_DESCRIPTION = "description";
 
+    /** String holding the description text for the saved feed */
+    public static final String COL_LINK= "link";
+
+    /** String holding the description text for the saved feed */
+    public static final String COL_PUB_DATE = "pub_date";
     /**
      * Parameterized child constructor for the database object
      * @param context - current activity plus layout
@@ -39,7 +44,9 @@ public class Database extends SQLiteOpenHelper {
         /** creates database/table */
         String CREATE_FEEDS_TABLE = "CREATE TABLE " + TABLE_NAME + "("
                 + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COL_TITLE + " TEXT,"
-                + COL_DESCRIPTION + " TEXT" + ")";
+                + COL_DESCRIPTION + " TEXT,"
+                + COL_LINK + " TEXT,"
+                + COL_PUB_DATE + " TEXT" + ")";
         db.execSQL(CREATE_FEEDS_TABLE);
     }
 

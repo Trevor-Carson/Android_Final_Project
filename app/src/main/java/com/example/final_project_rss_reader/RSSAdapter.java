@@ -87,7 +87,7 @@ public class RSSAdapter extends BaseAdapter implements Filterable {
         TextView title = view.findViewById(R.id.rssTitleTextView);
         title.setText(rssItem.getTitle());
 
-        return view;    //
+        return view;
     }
 
     /**
